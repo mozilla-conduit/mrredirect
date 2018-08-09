@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Redirecting MozReview request...</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mrredirect.css') }}">
+    <script src="{{ url_for('static', filename='js/mrredirect.js') }}"></script>
+  </head>
+  <body>
+    <p id="redirectdata"
+       class="hide"
+       data-bug-id="{{ bug_id }}"
+       data-bmo-url="{{ bmo_url }}"
+       {% for review_id, comment_id in review_comments %}
+       data-review-{{review_id}}="{{ comment_id }}"
+       {% endfor %}
+       >Redirecting you to <a id="redirect_anchor"></a>...</p>
+  </body>
+</html>
