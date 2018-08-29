@@ -29,7 +29,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return 'index page'
+    return render_template('index.html')
 
 
 @app.route('/r/<int:review_request_id>/diff/', defaults={'diff_id': 1})

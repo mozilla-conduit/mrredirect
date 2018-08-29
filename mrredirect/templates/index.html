@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>
+      MozReview redirection service
+    </title>
+  </head>
+  <body>
+    <p>This is a simple redirection service for Mozilla's old code-review
+      system, MozReview.  The purpose of this service is to redirect old
+      MozReview links to useful, related URLs.</p>
+
+    <p>Currently, this service provides the following redirects:</p>
+
+    <dl>
+      <dt>Review request URLs</dt>
+      <dd>URLs of the form <code>/r/&lt;id&gt;/</code> redirect to
+        their associated bug
+        on <a href="https://bugzilla.mozilla.org/">BMO</a>.</dd>
+      <dt>Review request diff URLs</dt>
+      <dd>URLs of the
+      form <code>/r/&lt;id&gt;/diff/[&lt;revision&gt;/]</code>
+      redirect to the associated commit in
+      the <a href="https://hg.mozilla.org/mozreview/">review-repo
+      archive</a>.  Note that, at the moment, all revisions of a given
+      diff redirect to the last (i.e. most recent) diff.  You can find
+      older diffs by searching the archive for
+      the <code>MozReview-Commit-ID</code>: <code>https://hg.mozilla.org/mozreview/&lt;repo&gt;/log?rev=MozReview-Commit-ID:+&lt;id&gt;</code>
+      (<a href="https://hg.mozilla.org/mozreview/gecko/log?rev=MozReview-Commit-ID:+KNUKL92aWcw">example</a>).</dd>
+    </dl>
+  </body>
+</html>
