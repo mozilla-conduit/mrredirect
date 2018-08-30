@@ -47,6 +47,11 @@ def review_request_diff(review_request_id, diff_id):
     if not review_request:
         abort(404)
 
+    if not review_request.commit_sha:
+        return render_template('squashed.html',
+                               bmo_url=BMO_URL,
+                               bug_id=review_request.bug_id)
+
     return redirect(
         f'{HG_URL}{review_request.review_repo}/rev/'
         f'{review_request.commit_sha}',
