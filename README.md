@@ -10,3 +10,6 @@ attempt to redirect you to an https local URL.
 
 Create the database by running `python mrdirect/dbinit.py`.  Run
 `mr-redirect-dev` for a local development server.
+
+See the docstring at the top of `mozreview-etl.py` for instructions on
+extracting redirect data from a MozReview/Review Board database.
