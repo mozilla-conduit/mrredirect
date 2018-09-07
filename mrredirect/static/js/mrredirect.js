@@ -26,11 +26,11 @@ var getRedirect = function(redirectData) {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  var redirectData = document.getElementById("redirectdata");
+  var redirectData = document.getElementById("redirect_data");
   var redirectAnchor = document.getElementById("redirect_anchor");
   var redirect = getRedirect(redirectData);
   redirectAnchor.href = redirect;
   redirectAnchor.textContent = redirect;
-  redirectData.setAttribute("class", "show");
+  redirectData.classList.remove("hide");
   window.location = redirect;
 });
