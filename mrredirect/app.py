@@ -2,6 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import os
+from pathlib import Path
 
 from flask import (
     abort,
@@ -21,7 +22,9 @@ BMO_URL = 'https://bugzilla.mozilla.org/'
 app = Flask(__name__)
 Talisman(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL'))
+DB_FILE = Path(__file__).resolve().parent.parent / "mrredirect.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_FILE}'
+print(app.config['SQLALCHEMY_DATABASE_URI'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
