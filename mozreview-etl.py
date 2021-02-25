@@ -31,13 +31,15 @@ import json
 import mysql.connector
 
 # Database name and credentials.
-DATABASE = 'mozreview'
-USER = 'mozreview'
-PASSWORD = 'mozreview'
+DATABASE = "mozreview"
+USER = "mozreview"
+PASSWORD = "mozreview"
 
 
 TABLES = {}
-TABLES['review_request'] = """
+TABLES[
+    "review_request"
+] = """
 CREATE TABLE review_request (
         id INTEGER NOT NULL,
         bug_id INTEGER,
@@ -48,24 +50,21 @@ CREATE TABLE review_request (
 """
 
 cnx = mysql.connector.connect(
-    user=USER,
-    password=PASSWORD,
-    host='127.0.0.1',
-    database=DATABASE
+    user=USER, password=PASSWORD, host="127.0.0.1", database=DATABASE
 )
 cursor = cnx.cursor()
 
 for name, ddl in TABLES.items():
-    print(f'Creating table {name}: ', end='')
+    print(f"Creating table {name}: ", end="")
     try:
         cursor.execute(ddl)
     except mysql.connector.Error as err:
         if err.errno == mysql.connector.errorcode.ER_TABLE_EXISTS_ERROR:
-            print('already exists.')
+            print("already exists.")
         else:
             print(err.msg)
     else:
-        print('ok')
+        print("ok")
 
 select_query = """
 SELECT
@@ -98,7 +97,7 @@ for rr_id, extra_data_str, repo_name, bugs_closed in cursor.fetchall():
     try:
         bug_id = int(bugs_closed)
     except ValueError:
-        print(f'review request {rr_id} has a bad bug ID: {bugs_closed}')
+        print(f"review request {rr_id} has a bad bug ID: {bugs_closed}")
         continue
 
     extra_data = json.loads(extra_data_str)
@@ -108,7 +107,7 @@ for rr_id, extra_data_str, repo_name, bugs_closed in cursor.fetchall():
             rr_id,
             bug_id,
             repo_name,
-            extra_data.get('p2rb.commit_id'),
+            extra_data.get("p2rb.commit_id"),
         )
 
         try:
@@ -116,19 +115,21 @@ for rr_id, extra_data_str, repo_name, bugs_closed in cursor.fetchall():
             cnx.commit()
         except mysql.connector.errors.IntegrityError as e:
             if e.errno == 1062:
-                print(f'Review request {rr_id} already exists in table.')
+                print(f"Review request {rr_id} already exists in table.")
                 exists += 1
             else:
                 raise
-        print(f'Inserted data for review request {rr_id}.')
+        print(f"Inserted data for review request {rr_id}.")
     except KeyError as e:
-        print(f'review request {rr_id} is corrupt: missing key {e}')
+        print(f"review request {rr_id} is corrupt: missing key {e}")
         failure += 1
     else:
         success += 1
 
-print(f'Operation completed with {success} review requests successfully '
-      f'imported, {failure} failures, and {exists} previously added.')
+print(
+    f"Operation completed with {success} review requests successfully "
+    f"imported, {failure} failures, and {exists} previously added."
+)
 
 cursor.close()
 cnx.close()
