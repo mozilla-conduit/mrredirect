@@ -19,7 +19,6 @@ setup(
     entry_points={
         "console_scripts": [
             "mr-redirect-dev = mrredirect.app:development_server",
-            "dbinit = mrredirect.dbinit:dbinit",
         ]
     },
 )
